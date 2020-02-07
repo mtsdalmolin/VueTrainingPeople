@@ -1,6 +1,31 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <h1>Welcome to Your Vue.js App</h1>
+    <h1>List of Users</h1>
+    <div>Filter: <input v-model="name" type="text" placeholder="Insert name here"/></div>
+    <ul v-for="(user, index) in users" :key="index">
+      <router-link :to="`/users/${user.id}`">
+       <li v-if="showUser(user.name)">{{ user.name }}</li>
+      </router-link>
+    </ul>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      name: ''
+    }
+  },
+  props: {
+    users: {
+      type: Array
+    }
+  },
+  methods: {
+    showUser (name) {
+      return name.toLowerCase().includes(this.name)
+    }
+  }
+}
+</script>
